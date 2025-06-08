@@ -1,0 +1,152 @@
+// Debug mode configuration
+const DEBUG_MODE = false;
+
+const debugLog = (...args) => {
+  if (DEBUG_MODE) {
+    console.log('[Frontrow Debug]', ...args);
+  }
+};
+
+
+(function() {
+  const mainIframe = document.querySelector('#iframe-frontrow-quant');
+  if (mainIframe) {
+    mainIframe.addEventListener('load', () => {
+      mainIframe.contentWindow.postMessage({name: "TRIGGER_RESIZE"}, "*");
+    });
+  }
+})();
+
+var providerModalStyles = `
+  #iframe-frontrow-quant {
+    display: none;
+  }
+
+  #frontrow-sticky-regular {
+    height: 62px !important;
+    width: 100%;
+    display: none;
+  }
+
+  .iframe.frontrow {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 99999997;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  #iframe-frontrow {
+ height: 100px !important;
+}
+#iframe-frontrow-quant{display: block !important}
+
+`
+
+var frStyleSheet = document.createElement("style")
+frStyleSheet.textContent = providerModalStyles
+document.head.appendChild(frStyleSheet)
+
+var div = document.querySelector("div#frontrow-portal")
+
+if(!div) {
+  div = document.createElement("div")
+  div.id = "frontrow-portal"
+}
+
+var frontrowModalUrl = "https://app.thefrontrowhealth.com/api/widgets/modal?presentation_type=quant&amp;product_id=1754"
+
+function setupIframe(className, url, zIndex = 99999997) {
+  if (document.querySelector("." + className) === null) {
+    const frModalIframe = document.createElement("iframe")
+    frModalIframe.classList.add("iframe")
+    frModalIframe.classList.add("frontrow")
+    frModalIframe.classList.add(className)
+    frModalIframe.src = url.replaceAll("&amp;", "&")
+    frModalIframe.style.borderStyle = "none"
+    frModalIframe.style.zIndex = zIndex
+    div.appendChild(frModalIframe)
+  }
+}
+
+setupIframe("iframe-modal-frontrow-1754", frontrowModalUrl, 99999998)
+
+var providerProfileUrl = "https://app.thefrontrowhealth.com/api/widgets/v1/provider_profiles?widget_id=1766"
+setupIframe("iframe-provider-profile-modal", providerProfileUrl, 99999999)
+
+document.body.appendChild(div)
+
+function openFrModal() {
+  debugLog('OPENING_FRONTROW_MODAL');
+  const frModalIframe = document.querySelector("iframe.iframe-modal-frontrow-1754");
+  frModalIframe.contentWindow.postMessage({ name: "UPDATE_UTM_PARAMS", utm_content: "badge" }, "*");
+  frModalIframe.style.display = "block";
+}
+
+function resizeHeight(value, origin) {
+  debugLog('RESIZING_HEIGHT:', { value, origin });
+  const iframes = [...document.querySelectorAll("iframe.iframe-frontrow")]
+  const badgeIframe = iframes.find(i => i.contentWindow === origin)
+
+  if (badgeIframe) {
+    badgeIframe.style.height = value + "px";
+    badgeIframe.style.display = "block";
+    debugLog('BADGE_IFRAME_RESIZED:', { id: badgeIframe.id, newHeight: value });
+  }
+
+}
+
+function setupAndOpenProviderModal(data) {
+  const ifm = document.querySelector('.iframe-provider-profile-modal');
+  ifm.contentWindow.postMessage({ name: "UPDATE_UTM_PARAMS", utm_content: "badge" }, "*");
+  ifm.contentWindow.postMessage({name: "OPEN", data}, "*");
+  ifm.style.display = "block"
+}
+
+function closeOriginModal(origin) {
+  const iframes = [...document.querySelectorAll("iframe")]
+  const frModalIframe = iframes.find(i => i.contentWindow === origin)
+  frModalIframe.style.display = "none"
+}
+
+function closeAllModals() {
+  const allModals = [...document.querySelectorAll(".iframe.frontrow")]
+  allModals.forEach(m => {
+    m.style.display = "none"
+  })
+}
+
+
+window.addEventListener("message", ev => {
+  if (DEBUG_MODE) {
+    const relevantEvents = [
+      "OPEN_MODAL",
+      "CLOSE_ALL_MODALS",
+      "CLOSE_STICKY",
+      "RESIZE_HEIGHT",
+      "OPEN_PROVIDER_MODAL"
+    ];
+
+    const isRelevantEvent =
+      relevantEvents.includes(ev.data) ||
+      (ev.data?.name && relevantEvents.includes(ev.data.name)) ||
+      (ev.data?.includes && ev.data.includes("CLOSE"));
+
+    if (isRelevantEvent) {
+      debugLog('MESSAGE_EVENT_RECEIVED:', ev.data);
+    }
+  }
+
+  if(ev.data === "OPEN_MODAL") return openFrModal();
+  if(ev.data === "CLOSE_ALL_MODALS") return closeAllModals();
+  if(ev.data === "CLOSE_STICKY") return closeSticky();
+  if(ev.data.includes && ev.data.includes("CLOSE")) return closeOriginModal(ev.source);
+  if(ev.data?.name === "RESIZE_HEIGHT") return resizeHeight(ev.data?.value, ev.source);
+  if(ev.data?.name === "OPEN_PROVIDER_MODAL") return setupAndOpenProviderModal(ev.data.data);
+})
+

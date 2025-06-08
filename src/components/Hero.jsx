@@ -14,24 +14,25 @@ const Hero = () => {
 
       <div className="container mx-auto px-6 py-20 pt-32">
         <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[80vh]">
-          
           {/* Left Content */}
           <div className="space-y-8 text-white">
-            
             {/* Brand Badge */}
             <div className="inline-flex items-center gap-2">
               <span className="text-white text-sm">Powered by</span>
-              <div className="bg-red-500 px-3 py-1 rounded text-white text-sm font-medium">
-                mitopure
+              <div className="bg-black px-3 py-1 rounded-full flex items-center gap-2">
+                {/* Inline SVG logo, matching the Framer SVG (replace with actual SVG as needed) */}
+                <svg width="86" height="24" viewBox="0 0 86 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ height: 24 }}>
+                  {/* Example SVG path, replace with the real one as needed */}
+                  <rect width="86" height="24" rx="12" fill="#fff" />
+                  <text x="50%" y="55%" textAnchor="middle" fill="black" fontSize="11" fontWeight="bold" dy=".3em" fontFamily="sans-serif">Mitopure</text>
+                </svg>
               </div>
             </div>
 
             {/* Main Headline */}
             <div className="space-y-4">
               <h1 className="text-4xl lg:text-5xl xl:text-6xl font-light leading-tight">
-                Introducing NEW Mitopure®
-                <br />
-                Gummies
+                Introducing NEW Mitopure® Gummies
               </h1>
             </div>
 
@@ -39,56 +40,66 @@ const Hero = () => {
             <div className="space-y-4">
               <div className="flex items-start gap-3">
                 <div className="w-5 h-5 rounded-full bg-white flex-shrink-0 mt-1 flex items-center justify-center">
-                  <div className="w-2 h-2 bg-gray-800 rounded-full"></div>
+                  {/* CheckCircle Icon (filled, dark) */}
+                  <svg width="18" height="18" viewBox="0 0 18 18" fill="#272724" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="9" cy="9" r="9" fill="#FCFCFA"/>
+                    <path d="M7.1 11.2L4.8 8.9L6.2 7.5L7.1 8.4L11.2 4.3L12.6 5.7L7.1 11.2Z" fill="#272724"/>
+                  </svg>
                 </div>
-                <span className="text-lg">500mg Mitopure for cellular function & healthy aging*</span>
+                <span className="text-lg">500mg Mitopure for cellular function &amp; healthy aging*</span>
               </div>
-              
               <div className="flex items-start gap-3">
                 <div className="w-5 h-5 rounded-full bg-white flex-shrink-0 mt-1 flex items-center justify-center">
-                  <div className="w-2 h-2 bg-gray-800 rounded-full"></div>
+                  <svg width="18" height="18" viewBox="0 0 18 18" fill="#272724" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="9" cy="9" r="9" fill="#FCFCFA"/>
+                    <path d="M7.1 11.2L4.8 8.9L6.2 7.5L7.1 8.4L11.2 4.3L12.6 5.7L7.1 11.2Z" fill="#272724"/>
+                  </svg>
                 </div>
                 <span className="text-lg">Sugar-free strawberry gummies free from artificial ingredients</span>
               </div>
-              
               <div className="flex items-start gap-3">
                 <div className="w-5 h-5 rounded-full bg-white flex-shrink-0 mt-1 flex items-center justify-center">
-                  <div className="w-2 h-2 bg-gray-800 rounded-full"></div>
+                  <svg width="18" height="18" viewBox="0 0 18 18" fill="#272724" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="9" cy="9" r="9" fill="#FCFCFA"/>
+                    <path d="M7.1 11.2L4.8 8.9L6.2 7.5L7.1 8.4L11.2 4.3L12.6 5.7L7.1 11.2Z" fill="#272724"/>
+                  </svg>
                 </div>
                 <span className="text-lg">Proven benefits supported by 15+ years of research</span>
               </div>
-              
               <div className="flex items-start gap-3">
                 <div className="w-5 h-5 rounded-full bg-white flex-shrink-0 mt-1 flex items-center justify-center">
-                  <div className="w-2 h-2 bg-gray-800 rounded-full"></div>
+                  <svg width="18" height="18" viewBox="0 0 18 18" fill="#272724" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="9" cy="9" r="9" fill="#FCFCFA"/>
+                    <path d="M7.1 11.2L4.8 8.9L6.2 7.5L7.1 8.4L11.2 4.3L12.6 5.7L7.1 11.2Z" fill="#272724"/>
+                  </svg>
                 </div>
-                <span className="text-lg">Formulated in Switzerland & made in the U.S.A.</span>
+                <span className="text-lg">Formulated in Switzerland &amp; made in the U.S.A.</span>
               </div>
             </div>
 
             {/* Product Card */}
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 max-w-md">
+            <div className="bg-white/10 backdrop-blur-xl rounded-lg p-6 max-w-md">
               <div className="flex items-center gap-4 mb-4">
                 <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center">
-                  <span className="text-gray-800 font-bold text-lg">1</span>
+                  <span className="text-[#C23F3F] font-bold text-lg">#1</span>
                 </div>
                 <div>
                   <h3 className="text-white text-xl font-medium">Longevity Gummies</h3>
+                  <p className="text-xs text-[#272724] font-medium">Doctor Recommended</p>
+                  <p className="text-xs text-black opacity-60">Urolithin A Brand</p>
                 </div>
                 <div className="ml-auto text-right">
                   <div className="text-gray-400 text-sm line-through">$125/mo</div>
                   <div className="text-white text-xl font-bold">$100/mo</div>
                 </div>
               </div>
-              
               <button className="w-full bg-white text-gray-800 font-medium py-3 px-6 rounded-lg hover:bg-gray-100 transition-colors duration-200">
                 BUY NOW
               </button>
             </div>
           </div>
 
-          {/* Right Content - Image */}
-          
+          {/* Right Content - Video with Overlaid Card */}
           <div className="relative">
             <div className="rounded-2xl overflow-hidden flex flex-col items-center" style={{ borderRadius: 12, opacity: 1 }}>
               {/* Video Container */}
@@ -123,7 +134,6 @@ const Hero = () => {
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </div>
