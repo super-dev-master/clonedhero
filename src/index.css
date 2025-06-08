@@ -1,0 +1,51 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+@layer base {
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+}
+
+@layer components {
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary-500 via-accent-500 to-secondary-500 bg-clip-text text-transparent;
+  }
+  
+  .glass-effect {
+    @apply backdrop-blur-md bg-white/10 border border-border;
+  }
+  
+  .button-glow {
+    @apply relative overflow-hidden;
+  }
+  
+  .button-glow::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-primary-400/20 via-accent-400/20 to-secondary-400/20 opacity-0 transition-opacity duration-300;
+  }
+  
+  .button-glow:hover::before {
+    @apply opacity-100;
+  }
+}
+
+.animate-delay-200 {
+  animation-delay: 0.2s;
+}
+
+.animate-delay-400 {
+  animation-delay: 0.4s;
+}
+
+.animate-delay-600 {
+  animation-delay: 0.6s;
+}
+
+.animate-delay-800 {
+  animation-delay: 0.8s;
+}
